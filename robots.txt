@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+# The zine PDF names private people on its credits page. Keep it out of search.
+Disallow: /zine/checking-the-box.pdf
+Sitemap: https://maletherapistinportland.com/sitemap.xml

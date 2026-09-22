@@ -1,0 +1,129 @@
+/* jscar.care stopgap — Bootstrap 5.3 + a thin layer on top.
+   Contrast (on --paper #faf8f3): --ink 16.2:1 · --accent 7.9:1 · --muted 8.4:1.
+   Crisis bar: --paper on --ink 16.2:1. All pass AA (4.5:1) and AAA (7:1). */
+:root {
+  --paper: #faf8f3;
+  --ink: #1b1b1b;
+  --accent: #8a2f12;
+  --muted: #4a4a4a;
+  --rule: #1b1b1b;
+
+  --bs-body-bg: var(--paper);
+  --bs-body-color: var(--ink);
+  --bs-link-color-rgb: 138, 47, 18;
+  --bs-link-hover-color-rgb: 27, 27, 27;
+  --bs-body-font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  --bs-body-font-size: 1.125rem;
+  --bs-body-line-height: 1.65;
+}
+
+body { background: var(--paper); color: var(--ink); }
+
+h1, h2, h3, .navbar-brand, .crisis-bar, .btn, .site-nav {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+h1 { font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-weight: 700; margin-top: 2.5rem; }
+
+a { text-underline-offset: 0.18em; }
+
+/* Visible focus everywhere — not relying on Bootstrap's box-shadow. */
+:focus-visible {
+  outline: 3px solid var(--accent) !important;
+  outline-offset: 3px !important;
+  box-shadow: none !important;
+}
+
+.skip-link {
+  position: absolute; left: 0.5rem; top: -3rem; z-index: 2000;
+  background: var(--ink); color: var(--paper); padding: 0.5rem 1rem;
+  text-decoration: none; border-radius: 0.25rem;
+}
+.skip-link:focus { top: 0.5rem; color: var(--paper); }
+
+.crisis-bar {
+  background: var(--ink); color: var(--paper);
+  font-size: 0.95rem; padding: 0.5rem 0; text-align: center;
+}
+.crisis-bar a { color: var(--paper); font-weight: 700; }
+.crisis-bar a:focus-visible { outline-color: var(--paper) !important; }
+
+.site-header { border-bottom: 2px solid var(--rule); }
+.navbar-brand { font-weight: 800; color: var(--ink); line-height: 1.2; }
+.navbar-brand small { display: block; font-weight: 400; font-size: 0.85rem; color: var(--muted); }
+.site-nav .nav-link { color: var(--ink); font-weight: 500; }
+.site-nav .nav-link:hover { color: var(--accent); }
+.site-nav .nav-link[aria-current="page"] {
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.35em;
+}
+.navbar-toggler { border: 2px solid var(--ink); color: var(--ink); }
+
+main { padding-top: 2.5rem; padding-bottom: 4rem; }
+.prose { max-width: 40rem; }
+.lede { font-size: 1.3rem; }
+
+figure.drawing img { width: 100%; height: auto; mix-blend-mode: multiply; }
+figure.drawing figcaption { font-size: 0.9rem; color: var(--muted); margin-top: 0.5rem; }
+
+.btn-ink {
+  background: var(--ink); color: var(--paper); border: 2px solid var(--ink);
+  font-weight: 600; padding: 0.6rem 1.2rem;
+}
+.btn-ink:hover { background: var(--paper); color: var(--ink); }
+
+.notice {
+  border: 2px solid var(--ink); padding: 1rem 1.25rem; margin: 1.5rem 0;
+  font-size: 1rem; background: #fff;
+}
+
+.faq dt { font-family: system-ui, sans-serif; font-weight: 700; margin-top: 1.5rem; }
+.faq dd { margin-left: 0; }
+
+.site-footer { border-top: 2px solid var(--rule); padding: 2rem 0; font-size: 0.95rem; }
+.site-footer a { color: var(--ink); }
+.site-footer .muted { color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* Scannability: at-a-glance facts + pull quote from Jon's own copy. */
+.at-a-glance {
+  list-style: none; padding: 1rem 1.25rem; margin: 1.5rem 0;
+  border-left: 4px solid var(--ink); background: #fff;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 1rem;
+}
+.at-a-glance li + li { margin-top: 0.4rem; }
+.pull {
+  font-size: 1.35rem; line-height: 1.45; font-style: italic;
+  border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+  padding: 1rem 0; margin: 2rem 0;
+}
+.prose h2 { font-size: 1.5rem; margin-top: 2.25rem; }
+.prose h3 { font-size: 1.15rem; font-weight: 700; margin-top: 1.75rem; }
+
+/* Touch targets: 44×44px minimum on standalone links (WCAG 2.5.5 size, Apple HIG).
+   Padding grows the hit area without changing the visual layout much. */
+.crisis-bar a {
+  display: inline-block; min-height: 44px; line-height: 44px; padding: 0 0.4rem;
+}
+.crisis-bar a[href^="tel:"] { min-width: 44px; text-align: center; }
+.crisis-bar { padding: 0.15rem 0; line-height: 1.4; }
+.navbar-toggler { min-width: 48px; min-height: 48px; }
+.site-nav .nav-link { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.site-footer li a { display: inline-block; padding: 0.7rem 0; }
+.btn { min-height: 48px; display: inline-flex; align-items: center; }
+
+/* Sticky-hover on touch screens: only invert the button where hover is real. */
+.btn-ink:hover { background: var(--ink); color: var(--paper); }
+@media (hover: hover) {
+  .btn-ink:hover { background: var(--paper); color: var(--ink); }
+}
+
+/* Keep brand + menu button on one row on narrow phones. */
+.navbar-brand { white-space: normal; flex: 1 1 0; min-width: 0; margin-right: 0.75rem; }
+@media (max-width: 399.98px) {
+  .navbar-brand { font-size: 1.1rem; }
+  .navbar-brand small { font-size: 0.8rem; }
+}
+.site-footer address { font-style: normal; line-height: 1.7; }
