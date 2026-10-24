@@ -1,0 +1,13 @@
+# Old jscar.care (mmm.page) paths -> new pages
+/about / 301
+/about/ / 301
+/main / 301
+/main/ / 301
+/approach /help/ 301
+/approach/ /help/ 301
+/dudes /help/ 301
+/dudes/ /help/ 301
+/blocks /zine/ 301
+/blocks/ /zine/ 301
+/business /fees/ 301
+/business/ /fees/ 301

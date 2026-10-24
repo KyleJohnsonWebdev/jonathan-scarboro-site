@@ -1,0 +1,485 @@
+/* maletherapistinportland.com stopgap — Bootstrap 5.3 + a thin layer on top.
+   Direction (Jon, Oct 2026): white page, colour from the photography, neutral interface (ink on white).
+   Type (Jon's pick): Bricolage Grotesque for titles and pull quotes, Familjen Grotesk for everything else.
+   Contrast on white: --ink 17.4:1 · --muted 8.9:1 · white on --ink (buttons, crisis bar) 17.4:1. */
+
+/* Both self-hosted (SIL OFL, see assets/fonts/*-OFL.txt): no third-party request, matches the privacy page and CSP. */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("../fonts/bricolage-grotesque-latin-opsz-normal.woff2") format("woff2");
+  font-weight: 200 800; font-style: normal; font-display: swap;
+}  /* variable weight + optical size: it calms down automatically at smaller sizes */
+@font-face {
+  font-family: "Familjen Grotesk";
+  src: url("../fonts/familjen-grotesk-latin-wght-normal.woff2") format("woff2");
+  font-weight: 400 700; font-style: normal; font-display: swap;
+}
+/* Backups: if a web font is slow or blocked, the device's Arial stands in, resized to match each font's
+   width and line height so the page barely shifts when the real font arrives. Devices without Arial use system-ui. */
+@font-face {
+  font-family: "Familjen Fallback"; src: local("Arial"), local("ArialMT");
+  size-adjust: 94.3%; ascent-override: 108.7%; descent-override: 23.9%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Bricolage Fallback"; src: local("Arial Bold"), local("Arial-BoldMT"), local("Arial");
+  size-adjust: 98.2%; ascent-override: 94.7%; descent-override: 27.5%; line-gap-override: 0%;
+}
+:root {
+  --paper: #ffffff;
+  --ink: #1b1b1b;
+  --accent: var(--ink);      /* links, focus, buttons: neutral, so the photos carry the colour */
+  --accent-dark: #000000;
+  --muted: #4a4a4a;
+  --rule: #1b1b1b;
+  --hairline: #d9d9d9;       /* decorative rules only */
+  --tint: #f5f5f5;           /* quiet panel behind the at-a-glance box */
+
+  --bs-body-bg: var(--paper);
+  --bs-body-color: var(--ink);
+  --bs-link-color-rgb: 27, 27, 27;
+  --bs-link-hover-color-rgb: 0, 0, 0;
+  --font-body: "Familjen Grotesk", "Familjen Fallback", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Bricolage Grotesque", "Bricolage Fallback", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --bs-body-font-family: var(--font-body);
+  --bs-body-font-size: 1.125rem;
+  --bs-body-line-height: 1.6;
+}
+
+body { background: var(--paper); color: var(--ink); }
+
+/* Type hierarchy.
+   Bricolage (display): h1 700 · h2 600 · pull quote 500 · site name 700.
+   Familjen (text, 400-700): body 400 · h3, FAQ questions, buttons 600 · nav 500 · captions/meta 400. */
+h1, h2, .pull, .navbar-brand { font-family: var(--font-display); }
+h1 { font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+h2 { font-weight: 600; letter-spacing: -0.01em; margin-top: 2.5rem; }
+h3 { font-weight: 600; }
+.navbar-brand small { font-family: var(--font-body); }
+
+a { text-underline-offset: 0.18em; }
+
+/* Visible focus everywhere — not relying on Bootstrap's box-shadow. */
+:focus-visible {
+  outline: 3px solid var(--accent) !important;
+  outline-offset: 3px !important;
+  box-shadow: none !important;
+}
+
+.skip-link {
+  position: absolute; left: 0.5rem; top: -3rem; z-index: 2000;
+  background: var(--ink); color: var(--paper); padding: 0.5rem 1rem;
+  text-decoration: none; border-radius: 0.25rem;
+}
+.skip-link:focus { top: 0.5rem; color: var(--paper); }
+
+.crisis-bar {
+  background: var(--ink); color: var(--paper);
+  font-size: 0.95rem; padding: 0.5rem 0; text-align: center;
+}
+.crisis-bar a { color: var(--paper); font-weight: 700; }
+.crisis-bar a:focus-visible { outline-color: var(--paper) !important; }
+
+.site-header { border-bottom: 2px solid var(--rule); }
+.navbar-brand { font-weight: 700; color: var(--ink); line-height: 1.2; letter-spacing: -0.01em; }
+.navbar-brand small { display: block; font-weight: 400; font-size: 0.85rem; color: var(--muted); }
+.site-nav .nav-link { color: var(--ink); font-weight: 500; }
+.site-nav .nav-link:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 0.35em; }
+.site-nav .nav-link[aria-current="page"] {
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.35em;
+}
+.navbar-toggler { border: 2px solid var(--ink); color: var(--ink); }
+
+main { padding-top: 2.5rem; padding-bottom: 4rem; }
+.prose { max-width: 40rem; }
+.lede { font-size: 1.3rem; font-weight: 400; }
+
+figure.drawing img { width: 100%; height: auto; mix-blend-mode: multiply; }
+figure.drawing figcaption { font-size: 0.9rem; color: var(--muted); margin-top: 0.5rem; }
+
+.btn-ink {
+  background: var(--accent); color: var(--paper); border: 2px solid var(--accent);
+  font-weight: 600; padding: 0.6rem 1.2rem;
+}
+.btn-ink:hover { background: var(--paper); color: var(--ink); }
+
+.notice {
+  border: 2px solid var(--ink); padding: 1rem 1.25rem; margin: 1.5rem 0;
+  font-size: 1rem; background: #fff;
+}
+
+.faq dt { font-weight: 600; margin-top: 1.5rem; }
+.faq dd { margin-left: 0; }
+
+.site-footer { border-top: 2px solid var(--rule); padding: 2rem 0; font-size: 0.95rem; }
+.site-footer a { color: var(--ink); }
+.site-footer .muted { color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* Scannability: at-a-glance facts + pull quote from Jon's own copy. */
+.at-a-glance {
+  list-style: none; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+  background: var(--tint); font-size: 1rem;   /* quick-reference lists only: one padding everywhere, no side bar */
+}
+.at-a-glance li + li { margin-top: 0.4rem; }
+.pull {
+  font-size: 1.35rem; line-height: 1.45; font-weight: 500; letter-spacing: -0.01em;
+  border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+  padding: 1rem 0; margin: 2rem 0;
+}
+.prose h2 { font-size: 1.5rem; margin-top: 2.25rem; }
+.prose h3 { font-size: 1.15rem; font-weight: 600; margin-top: 1.75rem; }
+
+/* Touch targets: 44×44px minimum on standalone links (WCAG 2.5.5 size, Apple HIG).
+   Padding grows the hit area without changing the visual layout much. */
+.crisis-bar a {
+  display: inline-block; min-height: 44px; line-height: 44px; padding: 0 0.4rem;
+}
+.crisis-bar a[href^="tel:"] { min-width: 44px; text-align: center; }
+.crisis-bar { padding: 0.15rem 0; line-height: 1.4; }
+.navbar-toggler { min-width: 48px; min-height: 48px; }
+.site-nav .nav-link { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.site-footer li a { display: inline-block; padding: 0.7rem 0; }
+.btn { min-height: 48px; display: inline-flex; align-items: center; }
+
+/* Sticky-hover on touch screens: only invert the button where hover is real. */
+.btn-ink:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: var(--paper); }
+@media (hover: hover) {
+  .btn-ink:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: var(--paper); }
+}
+
+/* Keep brand + menu button on one row on narrow phones. */
+@media (max-width: 991.98px) {
+  .navbar-brand { white-space: normal; flex: 1 1 0; min-width: 0; margin-right: 0.75rem; }
+}
+@media (max-width: 399.98px) {
+  .navbar-brand { font-size: 1.1rem; }
+  .navbar-brand small { font-size: 0.8rem; }
+}
+.site-footer address { font-style: normal; line-height: 1.7; }
+
+
+
+/* Photos carry all the colour (cutouts on colour shapes, supplied by Kyle). No frame, radius or shadow of our own,
+   so a cutout sits straight on the white page. */
+figure.photo img { display: block; mix-blend-mode: normal; border-radius: 0; box-shadow: none; }
+figure.photo figcaption { margin-top: 0.9rem; }
+
+figure.drawing:not(.photo) img { mix-blend-mode: multiply; }
+
+
+/* ---------- Drawings beside long sections (desktop) ----------
+   A little smaller and centred in their column, and they stay in view while the section scrolls. */
+@media (min-width: 992px) {
+  main .row > .col-lg-5 > figure.drawing:not(.photo) {
+    max-width: 23rem; margin-left: auto; margin-right: auto;
+    position: sticky; top: 1.5rem;
+  }
+}
+/* Drawings are ink on white, so they sit on the white page with no box. */
+figure.drawing:not(.photo) picture { display: block; background: var(--paper); }
+
+/* Skip-link target: main gets programmatic focus; no giant outline around the whole page. */
+main:focus { outline: none !important; }
+
+
+/* ---------- Editorial type settings (all pages) ----------
+   ~65 characters per line in Familjen, slightly tighter leading, clearer paragraph breaks. */
+body { line-height: 1.5; }
+.prose { max-width: 35rem; }
+main p { margin-bottom: 1.25em; }
+
+/* ---------- Magazine-spread layout (all main pages) ----------
+   Skim path: heading → lede → each section's first sentence (set larger) → closing line → button.
+   Structure: h1, lede, .spread-aside (photo + sidebar box), .spread-main (sections).
+   Desktop: two columns, the aside is one sidebar block beside the text. Phones: one column in the order
+   heading, photo, lede, sidebar box, sections (the aside's children join the grid via display: contents).
+   The DOM order (heading, lede, photo, box, sections) matches the visual order wherever it matters for focus. */
+.spread p:not(.close-line), .spread .lede, .spread .faq { max-width: 35rem; }
+.spread-open { display: grid; grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "h1" "photo" "lede" "side" "main"; }
+.spread-aside { display: contents; }
+.spread-h1 { grid-area: h1; margin-bottom: 1.25rem; }
+.spread-lede { grid-area: lede; }
+.spread-photo { grid-area: photo; }
+.spread-photo figure { margin: 0 0 1.75rem; }
+.spread-side { grid-area: side; }
+.spread-main { grid-area: main; }
+.spread-main > section > h2:first-child, .spread-main > h2:first-child { margin-top: 2rem; }
+@media (min-width: 992px) {
+  .spread-open { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: 3.5rem;
+    grid-template-rows: auto auto 1fr; grid-template-areas: "h1 aside" "lede aside" "main aside"; align-items: start; }
+  .spread-aside { display: block; grid-area: aside; }
+  .spread-photo figure { margin: 0; }
+  .spread-side { margin-top: 1.75rem; }
+  .spread-main > section:first-child > h2:first-child { margin-top: 1rem; }
+}
+/* (margin-top on .spread-side, set above, is the gap under the photo; don't reset it here) */
+.spread-side > .at-a-glance, .spread-side.at-a-glance { margin-left: 0; margin-right: 0; margin-bottom: 1.5rem; }
+.spread-side > .at-a-glance:first-child { margin-top: 0; }
+.side-label, .side-heading { font-family: var(--font-body); font-size: 1rem; font-weight: 600; margin: 0 0 0.4rem; letter-spacing: 0; }
+.side-list { padding-left: 1.1rem; margin: 0; }
+.side-list li + li { margin-top: 0.35rem; }
+
+/* Sections below the opening: text on the left, a sidebar (box or drawing) on the right. */
+.spread-row { display: grid; grid-template-columns: minmax(0, 1fr); margin-top: 1rem; }
+.spread-row-side { margin: 1rem 0 0; }
+.spread-row-side h3 { margin-top: 0; font-size: 1.15rem; }
+@media (min-width: 992px) {
+  .spread-row { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: 3.5rem; align-items: start; }
+  .spread-row-side { margin-top: 3.25rem; }
+  .spread-row-side figure { max-width: 23rem; margin: 0 auto; }
+}
+
+/* First sentence of each section set larger: the entry point for skimmers. Same paragraph, so it reads normally aloud. */
+/* Run-in: the first sentence is larger but stays part of the paragraph, flowing straight into the rest.
+   line-height: 1 keeps the bigger text inside the paragraph's own line spacing, so wrapped lines stay even. */
+.lead-in { font-size: 1.2em; line-height: 1; font-weight: 500; letter-spacing: -0.005em; }
+
+/* FAQ questions a step up, so the page can be skimmed by question. */
+.spread .faq dt { font-size: 1.15rem; line-height: 1.35; margin-top: 1.75rem; }
+.spread .faq dt:first-child { margin-top: 0.5rem; }
+
+/* Closing: the "good fit" line as the one full-width statement, then the next step. */
+.spread-close { border-top: 2px solid var(--ink); margin-top: 3.5rem; padding-top: 2.25rem; }
+.close-line { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.015em;
+  font-size: clamp(1.6rem, 1rem + 2vw, 2.5rem); line-height: 1.15; text-wrap: balance; max-width: 24em; margin-bottom: 1.25rem; }
+.nowrap { white-space: nowrap; }
+/* A drawing (not a photo) in the sidebar sits smaller and centred, so it doesn't outweigh short pages. */
+.spread-photo figure.drawing:not(.photo) { max-width: 16rem; margin: 0 auto 1.75rem; }
+@media (min-width: 992px) { .spread-photo figure.drawing:not(.photo) { max-width: 19rem; margin: 0 auto; } }
+
+/* Sidebar prose ("Where I'm coming from"): content to read, so full-size ink text and a real heading,
+   marked as a sidebar by a short thick rule rather than a box. */
+.side-bio::before { content: ""; display: block; width: 3rem; height: 3px; background: var(--ink); margin-bottom: 1rem; }
+.side-bio h3 { font-size: 1.2rem; margin: 0 0 0.6rem; }
+
+/* Required fine print (Good Faith Estimate): complete and visible, but quiet. Muted text is 8.9:1 on white. */
+.fine-print { border-top: 1px solid var(--hairline); padding-top: 1rem; font-size: 0.9rem; line-height: 1.5; color: var(--muted); }
+.fine-print h2, .fine-print h3 { font-family: var(--font-body); font-size: 0.95rem; font-weight: 600; color: var(--ink); margin: 0 0 0.4rem; letter-spacing: 0; }
+.fine-print ul { padding-left: 1.1rem; margin-bottom: 0.75rem; }
+.fine-print li + li { margin-top: 0.25rem; }
+.spread .fine-print p { margin-bottom: 0.6rem; }
+.fine-print a { color: var(--ink); }
+
+/* Contact: on phones the text and button come before the office photo (desktop is unchanged). */
+.spread-open--text-first { grid-template-areas: "h1" "lede" "main" "photo" "side"; }
+.spread-open--text-first .spread-photo figure { margin: 2rem 0 0; }
+@media (min-width: 992px) {
+  .spread-open--text-first { grid-template-areas: "h1 aside" "lede aside" "main aside"; }
+  .spread-open--text-first .spread-photo figure { margin: 0; }
+}
+
+/* Expand/collapse (native <details>, no JavaScript). The summary is a 44px tap target with a visible focus ring. */
+.expand { margin-top: 0.25rem; }
+.expand > summary { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 44px; cursor: pointer;
+  font-weight: 600; color: var(--ink); text-decoration: underline; text-underline-offset: 0.18em; list-style: none; }
+.expand > summary::-webkit-details-marker { display: none; }
+.expand > summary::after { content: ""; width: 0.45em; height: 0.45em; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-0.15em); transition: transform 0.15s; }
+.expand[open] > summary::after { transform: rotate(-135deg) translateY(-0.1em); }
+.expand[open] > summary { margin-bottom: 0.4rem; }
+@media print { .expand > *:not(summary) { display: block !important; } }
+
+/* Screen-reader-only text (a heading that structures the page for assistive tech without showing). */
+.visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important;
+  overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
+/* Fees page: no visible FAQ heading, so the first question sits level with the intro's column rhythm. */
+.spread .faq dt:first-child { margin-top: 1.5rem; }
+
+/* ======================================================================
+   Stacked sections (Home, What I help with, Fees + FAQ), Oct 2026
+   Each section is self-contained, so on phones nothing gets wedged between paragraphs.
+   ====================================================================== */
+
+/* Phones: a wider side gutter (Bootstrap's default is 12px). */
+@media (max-width: 575.98px) {
+  .container { padding-left: 20px; padding-right: 20px; }
+}
+
+.sections > .sec + .sec { margin-top: 3rem; }
+@media (min-width: 992px) { .sections > .sec + .sec { margin-top: 4.5rem; } }
+
+/* 1. Intro section: heading + text, with the photo beside them on desktop.
+   Phones/tablets: a small circle photo above the heading, then the text. */
+.sec-intro { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "photo" "h1" "text"; }
+.sec-h1 { grid-area: h1; margin-bottom: 1.25rem; }
+.sec-photo { grid-area: photo; }
+.sec-text { grid-area: text; }
+.sec-text > p, .sec-text .lede { max-width: 35rem; }
+.portrait { margin: 0 0 1.25rem; }
+.portrait img { display: block; width: 104px; height: 104px; border-radius: 50%; object-fit: cover; }
+@media (min-width: 992px) {
+  .sec-intro { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: 3.5rem;
+    grid-template-rows: auto 1fr; grid-template-areas: "h1 photo" "text photo"; align-items: start; }
+  .portrait { margin: 0; }
+  .portrait img { width: 100%; height: auto; border-radius: 0; }
+}
+
+/* 2. Why do therapy? + At a glance card. Phones: the card, then the story. Desktop: story on the left, the card in the
+   right column, staying in view while the story scrolls. */
+.sec-story > p { max-width: 35rem; }
+.glance-card { background: var(--tint); padding: 1.5rem 1.25rem; margin-bottom: 3rem; }
+@media (min-width: 768px) { .glance-card { padding: 1.75rem; } }
+.glance-list { margin: 0; font-size: 1rem; }
+.glance-list > div + div { margin-top: 1rem; }
+.glance-list dt { font-weight: 600; font-size: 0.8rem; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.15rem; }
+.glance-list dd { margin: 0; line-height: 1.45; }
+.glance-cta { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #d0d0d0; }
+.glance-cta-label { font-weight: 600; font-size: 0.8rem; letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 0.15rem; }
+.glance-cta-text { font-size: 1rem; line-height: 1.45; margin: 0 0 1rem; }
+.btn-block { display: flex; justify-content: center; width: 100%; text-align: center; }
+@media (min-width: 992px) {
+  .sec-story-wrap { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: 3.5rem; align-items: start; }
+  .sec-story { grid-column: 1; grid-row: 1; }
+  .glance-card { grid-column: 2; grid-row: 1; margin: 0.4rem 0 0; position: sticky; top: 1.5rem; }
+}
+
+/* 4. Closing line across the full width, a step larger on desktop. */
+.close-wide .close-line { max-width: none; font-size: clamp(1.6rem, 1rem + 2.4vw, 3rem); line-height: 1.12; }
+
+/* Fees page: Fees + Good Faith Estimate under the intro text; questions in two columns on desktop. */
+.fees-block { margin-top: 1.75rem; max-width: 35rem; }
+.fees-block .at-a-glance { margin: 0 0 1.25rem; }
+.faq-grid > div > dt { margin-top: 0; }
+.faq-grid { max-width: none !important; }
+.faq-grid > div { break-inside: avoid; margin-bottom: 1.75rem; }
+/* Two columns that fill top to bottom (left column first), so Jon's order reads the way people scan. */
+@media (min-width: 992px) { .faq-grid { column-count: 2; column-gap: 3.5rem; } }
+.spread .faq-grid dt:first-child { margin-top: 0; }
+.sec-faq > .small { margin-top: 2rem; max-width: 35rem; }
+
+/* Fees: a link from the Fees box down to the Good Faith Estimate notice at the bottom of the page. */
+.fees-gfe-link { margin: 0.75rem 0 0; font-size: 0.95rem; }
+.sec-gfe { max-width: 35rem; }
+.sec-gfe .fine-print { margin: 0; }
+
+/* ======================================================================
+   Batch, Oct 2026: type scale, page colours on buttons, hover/pressed states, menu button,
+   crisis bar on phones, crisis buttons, contact options, closing passage
+   ====================================================================== */
+
+/* Type scale: the page title leads (about 32px on phones, 56px on wide screens);
+   the closing line sits below it (about 40px max). */
+h1 { font-size: clamp(2rem, 1.2rem + 2.6vw, 3.5rem); letter-spacing: -0.025em; line-height: 1.05; }
+.close-wide .close-line { font-size: clamp(1.5rem, 1rem + 1.6vw, 2.5rem); line-height: 1.15; }
+
+/* Each page's main buttons take the colour of that page's photo, with black text:
+   coral 6.8:1, turquoise 12.6:1, lime 13.3:1 (white text on coral would fail at 2.5:1). */
+.theme-coral     { --accent-bg: #f08573; }
+.theme-turquoise { --accent-bg: #74f0e8; }
+.theme-lime      { --accent-bg: #dfed00; }
+.btn { transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.05s ease; }
+[class*="theme-"] main .btn-ink { background: var(--accent-bg); border-color: var(--accent-bg); color: var(--ink); }
+@media (hover: hover) {
+  /* Hover lightens only the background (toward white), so the black label keeps or gains contrast. */
+  [class*="theme-"] main .btn-ink:hover { background: color-mix(in srgb, var(--accent-bg) 70%, white); border-color: color-mix(in srgb, var(--accent-bg) 70%, white); color: var(--ink); }
+  /* Black buttons (Contact, Zine): hover inverts to an outline, a clear change instead of black to slightly blacker. */
+  body:not([class*="theme-"]) main .btn-ink:hover { background: var(--paper); border-color: var(--ink); color: var(--ink); }
+}
+/* Pressed: a slightly deeper shade and a 1px nudge, so the tap feels acknowledged. */
+[class*="theme-"] main .btn-ink:active { background: color-mix(in srgb, var(--accent-bg) 88%, black); border-color: color-mix(in srgb, var(--accent-bg) 88%, black); transform: translateY(1px); }
+body:not([class*="theme-"]) main .btn-ink:active { background: #e8e8e8; color: var(--ink); border-color: var(--ink); transform: translateY(1px); }
+
+/* Text links: a thicker underline on hover. */
+@media (hover: hover) {
+  main a:not(.btn):hover, .site-footer a:hover { text-decoration-thickness: 2px; }
+}
+
+/* Menu button: no leftover ring after a tap/click (keyboard users keep the :focus-visible outline),
+   a hover tint, a pressed shade, and an × while the menu is open. */
+.navbar-toggler:focus { box-shadow: none; }
+.navbar-toggler { transition: background-color 0.15s ease; }
+@media (hover: hover) { .navbar-toggler:hover { background: var(--tint); } }
+.navbar-toggler:active { background: #e6e6e6; }
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%231b1b1b' stroke-linecap='round' stroke-width='2.2' d='M8 8l14 14M22 8L8 22'/%3e%3c/svg%3e");
+}
+
+/* Crisis bar: the full sentence from 576px up; on phones a one-line version (pending Jon's OK). */
+.cb-short { display: none; }
+@media (max-width: 575.98px) {
+  .cb-long { display: none; }
+  .cb-short { display: inline; }
+}
+
+/* Crisis page: big tap-to-call and tap-to-text buttons. */
+.crisis-actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.75rem; margin: 1.5rem 0 2rem; max-width: 36rem; }
+@media (min-width: 576px) { .crisis-actions { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.btn-crisis { justify-content: center; min-height: 56px; font-size: 1.15rem; font-weight: 600;
+  background: var(--ink); color: var(--paper); border: 2px solid var(--ink); }
+@media (hover: hover) { .btn-crisis:hover { background: var(--paper); color: var(--ink); } }
+.btn-crisis:active { transform: translateY(1px); }
+
+/* Home card: "First step" is a small heading, one level above the fact labels. */
+.glance-cta-heading { font-family: var(--font-body); font-size: 1.25rem; font-weight: 600; letter-spacing: -0.005em; margin: 0 0 0.3rem; }
+
+
+/* Contact: the ways to reach him as separate items (quick reference = grey boxes). */
+.contact-options { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+@media (min-width: 768px) { .contact-options { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.contact-option { background: var(--tint); padding: 1.25rem 1.5rem; }
+.contact-option p { max-width: none; }
+.contact-option .small { margin: 0.75rem 0 0; }
+.option-heading { font-family: var(--font-body); font-size: 1.15rem; font-weight: 600; letter-spacing: 0; margin: 0 0 0.4rem; }
+.sections > .notice { max-width: 40rem; }
+/* Office photo: a landscape photo, so it stays a normal photo at every width (no circle). On phones it follows the text. */
+.sec-intro--wide-photo { grid-template-areas: "h1" "text" "photo"; }
+.sec-intro--wide-photo .sec-photo figure { margin: 1.5rem 0 0; }
+@media (min-width: 992px) {
+  .sec-intro--wide-photo { grid-template-areas: "h1 photo" "text photo"; }
+  .sec-intro--wide-photo .sec-photo figure { margin: 0; }
+}
+
+/* ======================================================================
+   Marketing touches (Oct 2026): availability line, hours, zine card, consultation steps, zine-page author card
+   ====================================================================== */
+/* Availability (one switch in _build.py: ACCEPTING_NEW_CLIENTS). The dot is decorative; the words carry it. */
+.accepting { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 500; margin: 0.75rem 0 0; }
+.accepting--center { justify-content: center; }
+.accepting-dot { width: 0.6rem; height: 0.6rem; border-radius: 50%; background: #1f8a4c; flex: none; }
+
+/* Home: "From my zine" card after the story. */
+.zine-card { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 1.25rem; align-items: center;
+  border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); padding: 1.5rem 0; max-width: 40rem; }
+@media (min-width: 576px) { .zine-card { grid-template-columns: 7rem minmax(0, 1fr); } }
+.zine-card-art { margin: 0; }
+.zine-card-art img { width: 100%; height: auto; display: block; }
+.zine-card-label, .meet-label { font-weight: 600; font-size: 0.8rem; letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 0.2rem; }
+.zine-card-title, .meet-title { font-size: clamp(1.35rem, 1rem + 1vw, 1.75rem); margin: 0 0 0.35rem; }
+.zine-card-title a, .meet-title a { color: var(--ink); }
+.zine-card p { max-width: none; font-size: 1rem; }
+
+/* Contact: how the consultation works (three steps). */
+.steps-title { font-size: clamp(1.5rem, 1rem + 1.2vw, 2rem); margin: 0 0 1rem; }
+.steps-list { list-style: none; counter-reset: step; padding: 0; margin: 0; display: grid; gap: 1rem; max-width: 40rem; }
+@media (min-width: 992px) { .steps-list { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: none; gap: 2rem; } }
+.steps-list li { counter-increment: step; position: relative; padding-left: 3rem; }
+.steps-list li::before { content: counter(step); position: absolute; left: 0; top: -0.1rem; width: 2.1rem; height: 2.1rem; border-radius: 50%;
+  border: 2px solid var(--ink); display: flex; align-items: center; justify-content: center; font-weight: 600; font-family: var(--font-display); }
+.step-head { display: block; font-weight: 600; font-size: 1.1rem; margin-bottom: 0.15rem; }
+
+/* Zine page: a path from the zine to Jon (print readers land here from jscar.care/zine). */
+.meet-card { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: 0.5rem 1.25rem; align-items: center;
+  margin-top: 3.5rem; padding-top: 2rem; border-top: 2px solid var(--ink); }
+.meet-avatar { width: 5rem; height: 5rem; border-radius: 50%; object-fit: cover; }
+.meet-cta { grid-column: 1 / -1; margin-top: 0.75rem; }
+@media (min-width: 768px) {
+  .meet-card { grid-template-columns: 6rem minmax(0, 1fr) auto; }
+  .meet-avatar { width: 6rem; height: 6rem; }
+  .meet-cta { grid-column: auto; margin-top: 0; }
+}
+/* Card title links: at least 44px tall to tap, without shifting the layout. */
+.zine-card-title a, .meet-title a { display: inline-block; padding: 0.6rem 0; margin: -0.6rem 0; }
+/* Home: the zine card now follows the closing section. */
+.spread-close + .zine-card { margin-top: 3rem; }
+/* Contact steps: the three page colours in menu order (About coral, What I help with turquoise, Fees lime),
+   tying getting started back to the pages people have read. Black numerals: 6.8:1, 12.6:1, 13.3:1.
+   The thin ink border keeps the lime circle visible on white. */
+.steps-list li:nth-child(1)::before { background: #f08573; }
+.steps-list li:nth-child(2)::before { background: #74f0e8; }
+.steps-list li:nth-child(3)::before { background: #dfed00; }
+.steps-list li::before { border-width: 1.5px; color: var(--ink); }
+@media (forced-colors: active) { .steps-list li::before { forced-color-adjust: auto; } }
